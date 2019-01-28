@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Controller()
@@ -30,5 +31,11 @@ class PokemonTypeController {
     @GetMapping("/")
     public List<PokemonType> getAllPokemonTypes() {
         return this.pokemonTypeService.getAllPokemonTypes();
+    }
+
+    @GetMapping(value = "/", params = "name")
+    PokemonType getPokemonTypeFromName(@PathParam("name") String name) {
+
+        return this.pokemonTypeService.getPokemonName(name);
     }
 }
