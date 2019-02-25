@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller()
@@ -30,7 +31,9 @@ class PokemonTypeController {
 
     @GetMapping("")
     public List<PokemonType> getAllPokemonTypes() {
-        return this.pokemonTypeService.getAllPokemonTypes();
+        var res = this.pokemonTypeService.getAllPokemonTypes();
+        res.sort(((o1, o2) -> o1.getId() - o2.getId()));
+        return res;
     }
 
     @GetMapping(value = "/", params = "name")
