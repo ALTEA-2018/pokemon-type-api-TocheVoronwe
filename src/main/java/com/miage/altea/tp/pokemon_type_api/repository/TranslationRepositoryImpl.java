@@ -45,8 +45,9 @@ public class TranslationRepositoryImpl implements TranslationRepository {
     }
 
     @Override
-    public String getPokemonName(int id, Locale locale) {
-        var res = getPokemon(translations.containsKey(locale) ?  translations.get(locale) : defaultTranslations, id);
+    public String getPokemonName(int id, Locale clientLocale) {
+        var locale = clientLocale != null && translations.containsKey(clientLocale) ?  translations.get(clientLocale) : defaultTranslations;
+        var res = getPokemon(locale, id);
         if (res != null) {
             return res.getName();
         }

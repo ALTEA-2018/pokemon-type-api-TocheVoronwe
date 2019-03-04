@@ -31,7 +31,14 @@ class PokemonTypeController {
 
     @GetMapping("")
     public List<PokemonType> getAllPokemonTypes() {
-        var res = this.pokemonTypeService.getAllPokemonTypes();
+        var res = this.pokemonTypeService.getAllPokemonTypes(null);
+        res.sort(((o1, o2) -> o1.getId() - o2.getId()));
+        return res;
+    }
+
+    @GetMapping("/locale/{locale}")
+    List<PokemonType> getPokemonTypeFromId(@PathVariable("locale") String locale){
+        var res = this.pokemonTypeService.getAllPokemonTypes(locale);
         res.sort(((o1, o2) -> o1.getId() - o2.getId()));
         return res;
     }
@@ -39,6 +46,6 @@ class PokemonTypeController {
     @GetMapping(value = "/", params = "name")
     PokemonType getPokemonTypeFromName(@PathParam("name") String name) {
 
-        return this.pokemonTypeService.getPokemonName(name);
+        return this.pokemonTypeService.getPokemonName(name, null);
     }
 }

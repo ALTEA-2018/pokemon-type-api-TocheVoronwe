@@ -7,7 +7,6 @@ import com.miage.altea.tp.pokemon_type_api.repository.TranslationRepositoryImpl;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,28 +33,29 @@ public class PokemonTypeServiceImpl implements PokemonTypeService {
     public PokemonType getPokemonType(int id) {
         var res = pokemonTypeRepository.findPokemonTypeById(id);
         if (res != null)
-            res.setName(getTranslatedName(res));
+            res.setName(getTranslatedName(res, null));
         return res;
     }
 
     @Override
-    public PokemonType getPokemonName(String name) {
+    public PokemonType getPokemonName(String name, String clientLocale) {
         var res = this.pokemonTypeRepository.findPokemonTypeByName(name);
-        res.setName(getTranslatedName(res));
+        res.setName(getTranslatedName(res, clientLocale));
         return res;
     }
 
-    private String getTranslatedName(PokemonType pokemonType) {
-        Locale locale = LocaleContextHolder.getLocale();
+    private String getTranslatedName(PokemonType pokemonType, String clientLocale) {
+
+        Locale locale = clientLocale != null ? new Locale(clientLocale, "") : null;
         return translationRepository.getPokemonName(pokemonType.getId(), locale);
     }
 
     @Override
-    public List<PokemonType> getAllPokemonTypes() {
+    public List<PokemonType> getAllPokemonTypes(String locale) {
 
         var res = pokemonTypeRepository.findAllPokemonType();
         if (res != null)
-            res.forEach(pokemonType -> pokemonType.setName(getTranslatedName(pokemonType)));
+            res.forEach(pokemonType -> pokemonType.setName(getTranslatedName(pokemonType, locale)));
         return res;
     }
 
