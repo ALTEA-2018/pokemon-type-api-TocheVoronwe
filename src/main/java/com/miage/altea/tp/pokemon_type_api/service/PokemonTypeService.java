@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PokemonTypeService {
     PokemonType getPokemonType(int id);
-    PokemonType getPokemonName(String name, String locale);
-    List<PokemonType> getAllPokemonTypes(String locale);
+    PokemonType getPokemonName(String name);
+    List<PokemonType> getAllPokemonTypes();
     void setTranslationRepository(TranslationRepository translationRepository);
 }
