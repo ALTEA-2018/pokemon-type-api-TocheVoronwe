@@ -67,7 +67,6 @@ public class PokemonTypeServiceImpl implements PokemonTypeService {
     }
 
     public void setPokemonTypeRepository(PokemonTypeRepository pokemonTypeRepository) {
-        System.out.println("hihi");
         this.pokemonTypeRepository = pokemonTypeRepository;
     }
 }
